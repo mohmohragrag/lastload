@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>تحليل أمان الإطار</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="container">
+    <h1>تحليل أمان الإطار</h1>
+
+    <h2>إدخال بيانات الإطار</h2>
+    ارتفاع الأعمدة (مم): <input id="colHeight" type="number" value="15000"><br>
+    عرض الإطار (مم): <input id="frameWidth" type="number" value="50000"><br>
+    الحمل الميت على الرافتر (kg/m): <input id="deadLoad" type="number" value="10"><br>
+    الحمل الحي على الرافتر (kg/m): <input id="liveLoad" type="number" value="4"><br>
+    الرياح (kg لكل عمود): <input id="windLoad" type="number" value="9600"><br>
+    المادة: <select id="material">
+      <option value="ST52">ST52</option>
+    </select><br>
+    معامل الخضوع fy (MPa): <input id="fy" type="number" value="325"><br>
+    معامل يونج E (GPa): <input id="E" type="number" value="210"><br>
+
+    <h2>العمود الأيسر</h2>
+    نوع المقطع:
+    <select id="col1Type" onchange="showColFields('1')">
+      <option value="builtup">Built-Up (ويب + فلانش)</option>
+      <option value="box">Box / علبة</option>
+      <option value="tube">Tube / ماسورة</option>
+    </select>
+    <div id="col1BuiltUp">
+      عرض الويب: <input id="col1WebWidth" type="number" value="50">
+      سمك الويب: <input id="col1WebThick" type="number" value="5">
+      عرض الفلانش: <input id="col1FlWidth" type="number" value="100">
+      سمك الفلانش: <input id="col1FlThick" type="number" value="10"><br>
+    </div>
+    <div id="col1Box" style="display:none">
+      الطول: <input id="col1BoxLength" type="number" value="100">
+      العرض: <input id="col1BoxWidth" type="number" value="50">
+      السمك: <input id="col1BoxThick" type="number" value="5"><br>
+    </div>
+    <div id="col1Tube" style="display:none">
+      القطر الخارجي: <input id="col1TubeOD" type="number" value="100">
+      السمك: <input id="col1TubeThick" type="number" value="5"><br>
+    </div>
+
+    <!-- نفس الشيء للعمود الأيمن -->
+    <h2>العمود الأيمن</h2>
+    نوع المقطع:
+    <select id="col2Type" onchange="showColFields('2')">
+      <option value="builtup">Built-Up (ويب + فلانش)</option>
+      <option value="box">Box / علبة</option>
+      <option value="tube">Tube / ماسورة</option>
+    </select>
+    <div id="col2BuiltUp">
+      عرض الويب: <input id="col2WebWidth" type="number" value="50">
+      سمك الويب: <input id="col2WebThick" type="number" value="5">
+      عرض الفلانش: <input id="col2FlWidth" type="number" value="100">
+      سمك الفلانش: <input id="col2FlThick" type="number" value="10"><br>
+    </div>
+    <div id="col2Box" style="display:none">
+      الطول: <input id="col2BoxLength" type="number" value="100">
+      العرض: <input id="col2BoxWidth" type="number" value="50">
+      السمك: <input id="col2BoxThick" type="number" value="5"><br>
+    </div>
+    <div id="col2Tube" style="display:none">
+      القطر الخارجي: <input id="col2TubeOD" type="number" value="100">
+      السمك: <input id="col2TubeThick" type="number" value="5"><br>
+    </div>
+
+    <!-- رافترين -->
+    <h2>الرافتر الأيسر</h2>
+    نوع المقطع:
+    <select id="beam1Type" onchange="showBeamFields('1')">
+      <option value="builtup">Built-Up (ويب + فلانش)</option>
+      <option value="box">Box / علبة</option>
+      <option value="tube">Tube / ماسورة</option>
+    </select>
+    <div id="beam1BuiltUp">
+      عرض الويب: <input id="beam1WebWidth" type="number" value="50">
+      سمك الويب: <input id="beam1WebThick" type="number" value="5">
+      عرض الفلانش: <input id="beam1FlWidth" type="number" value="100">
+      سمك الفلانش: <input id="beam1FlThick" type="number" value="10"><br>
+    </div>
+    <div id="beam1Box" style="display:none">
+      الطول: <input id="beam1BoxLength" type="number" value="100">
+      العرض: <input id="beam1BoxWidth" type="number" value="50">
+      السمك: <input id="beam1BoxThick" type="number" value="5"><br>
+    </div>
+    <div id="beam1Tube" style="display:none">
+      القطر الخارجي: <input id="beam1TubeOD" type="number" value="100">
+      السمك: <input id="beam1TubeThick" type="number" value="5"><br>
+    </div>
+
+    <h2>الرافتر الأيمن</h2>
+    نوع المقطع:
+    <select id="beam2Type" onchange="showBeamFields('2')">
+      <option value="builtup">Built-Up (ويب + فلانش)</option>
+      <option value="box">Box / علبة</option>
+      <option value="tube">Tube / ماسورة</option>
+    </select>
+    <div id="beam2BuiltUp">
+      عرض الويب: <input id="beam2WebWidth" type="number" value="50">
+      سمك الويب: <input id="beam2WebThick" type="number" value="5">
+      عرض الفلانش: <input id="beam2FlWidth" type="number" value="100">
+      سمك الفلانش: <input id="beam2FlThick" type="number" value="10"><br>
+    </div>
+    <div id="beam2Box" style="display:none">
+      الطول: <input id="beam2BoxLength" type="number" value="100">
+      العرض: <input id="beam2BoxWidth" type="number" value="50">
+      السمك: <input id="beam2BoxThick" type="number" value="5"><br>
+    </div>
+    <div id="beam2Tube" style="display:none">
+      القطر الخارجي: <input id="beam2TubeOD" type="number" value="100">
+      السمك: <input id="beam2TubeThick" type="number" value="5"><br>
+    </div>
+
+    <button onclick="analyzeFrame()">احسب الأمان وارسم الفريم</button>
+
+    <div id="output"></div>
+
+    <svg id="frameSVG" width="100%" height="400"></svg>
+
+  </div>
+  <script src="script.js"></script>
+</body>
+</html>
